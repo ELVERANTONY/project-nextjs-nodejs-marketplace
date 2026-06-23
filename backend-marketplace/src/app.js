@@ -32,6 +32,22 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+  res.json({
+    name: 'Marketplace Pro Backend',
+    author: 'Antony',
+    version: '1.0.0',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      products: '/api/products',
+      categories: '/api/categories',
+      auth: '/api/auth/login',
+    },
+    frontend: 'https://marketplace-pro-frontend.vercel.app',
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Marketplace Pro API is running' });
 });
