@@ -13,14 +13,14 @@ async function seed() {
   console.log('Roles created.');
 
   await User.create({
-    name: 'Admin User',
+    name: 'Admin',
     email: 'admin@marketplace.com',
     password: 'Admin123!',
     roleId: adminRole.id,
   });
 
   await User.create({
-    name: 'John Customer',
+    name: 'Antony',
     email: 'customer@marketplace.com',
     password: 'Customer123!',
     roleId: customerRole.id,
