@@ -5,7 +5,6 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const categoryRoutes = require('./routes/categories');
-const seedRoutes = require('./routes/seed');
 const app = express();
 
 const allowedOrigins = [
@@ -40,7 +39,6 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
-app.use('/api', seedRoutes);
 
 app.use((err, req, res, next) => {
   console.error('Unhandled error:', err);
