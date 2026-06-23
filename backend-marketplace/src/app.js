@@ -7,8 +7,22 @@ const productRoutes = require('./routes/products');
 const categoryRoutes = require('./routes/categories');
 const app = express();
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://marketplace-pro-frontend.vercel.app',
+];
+if (process.env.FRONTEND_URL) {
+  allowedOrigins.push(process.env.FRONTEND_URL);
+}
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
