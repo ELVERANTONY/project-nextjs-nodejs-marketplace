@@ -546,7 +546,7 @@ El sistema incluye las siguientes funcionalidades implementadas:
 
 ## Autor
 
-**Antony** - Estudiante de Ingenieria de Software
+**Antony Cholan** - Estudiante de Diseño y Desarrollo de Software
 Desarrollo de Aplicaciones Web - Ciclo 5
 
 Repositorio del proyecto: https://github.com/ELVERANTONY/project-nextjs-nodejs-marketplace
