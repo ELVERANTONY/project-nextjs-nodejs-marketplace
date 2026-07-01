@@ -1,134 +1,146 @@
 # Marketplace Pro
 
-A professional full-stack marketplace application built with Node.js, Express, Sequelize, MySQL, Next.js 15, TypeScript, and Tailwind CSS.
+Aplicación full-stack de marketplace con Node.js, Express, Sequelize, MySQL (Railway), Next.js 15, TypeScript y Tailwind CSS.
 
-## Architecture
+## Despliegue
+
+| Plataforma | URL |
+|------------|-----|
+| **Frontend (Vercel)** | https://marketplace-pro-frontend.vercel.app |
+| **Backend (Render)** | https://marketplace-pro-backend.onrender.com |
+| **Base de Datos (Railway)** | MySQL en la nube |
+
+## Credenciales de Prueba
+
+| Rol | Email | Contraseña |
+|-----|-------|------------|
+| **ADMIN** | admin@marketplace.com | Admin123! |
+| **CUSTOMER** | customer@marketplace.com | Customer123! |
+
+## Arquitectura
 
 ```
-marketplace-pro/
-├── backend-marketplace/         # Express API Server
+project-root/
+├── backend-marketplace/          # Express API Server
 │   ├── src/
-│   │   ├── config/             # Database configuration
-│   │   ├── controllers/        # Route handlers
-│   │   ├── middleware/         # Auth & authorization middleware
-│   │   ├── models/             # Sequelize models
-│   │   ├── routes/             # Express routes
-│   │   ├── seeders/            # Database seed script
-│   │   ├── app.js              # Express app setup
-│   │   └── server.js           # Entry point
-│   ├── .env                    # Environment variables
+│   │   ├── config/database.js    # Conexión MySQL (Railway)
+│   │   ├── controllers/          # Controladores
+│   │   ├── middleware/auth.js    # JWT + roles
+│   │   ├── models/               # Sequelize models
+│   │   ├── routes/               # Rutas REST
+│   │   └── seeders/seed.js       # Poblado de datos
+│   ├── .env.example
 │   └── package.json
-│
-└── frontend-marketplace/        # Next.js 15 Application
-    ├── src/
-    │   ├── app/                # App Router pages
-    │   ├── components/         # React components
-    │   ├── context/            # Auth context
-    │   ├── lib/                # Utilities & API client
-    │   └── types/              # TypeScript types
-    ├── .env.local              # Environment variables
-    └── package.json
+├── frontend-marketplace/         # Next.js 15
+│   ├── src/
+│   │   ├── app/                  # App Router
+│   │   ├── components/           # Componentes UI
+│   │   ├── context/AuthContext   # Auth state management
+│   │   └── lib/api.ts            # Cliente HTTP
+│   ├── vercel.json
+│   └── package.json
+├── schema.sql                    # Esquema de base de datos
+├── seed.sql                      # Datos de prueba (referencia)
+└── README.md
 ```
 
-## Tech Stack
+## Tecnologías
 
 ### Backend
 - **Runtime:** Node.js 18+
 - **Framework:** Express 5
 - **ORM:** Sequelize 6
-- **Database:** MySQL
-- **Auth:** JWT + bcryptjs
-- **CORS:** Enabled with frontend domain
+- **Base de datos:** MySQL (Railway Cloud)
+- **Autenticación:** JWT + bcryptjs
+- **Despliegue:** Render
 
 ### Frontend
 - **Framework:** Next.js 15 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS 4
-- **Animation:** Framer Motion
-- **Icons:** Lucide React
-- **Deployment:** Vercel-ready
+- **Lenguaje:** TypeScript
+- **Estilos:** Tailwind CSS 4
+- **Animaciones:** Framer Motion, GSAP
+- **Iconos:** Lucide React
+- **Despliegue:** Vercel
 
-## Features
+## Variables de Entorno
 
-- JWT Authentication with role-based access control
-- Admin and Customer roles
-- Product CRUD with category filtering
-- Category management
-- Real-time search
-- Responsive design
-- Dark mode support
-- Admin dashboard
-- SEO optimized
+### Backend (Railway / Render)
 
-## Getting Started
+| Variable | Requerida | Descripción |
+|----------|-----------|-------------|
+| `DATABASE_URL` | ✅ | URL de conexión MySQL de Railway |
+| `JWT_SECRET` | ✅ | Clave secreta para JWT |
+| `PORT` | ❌ | Render asigna automáticamente |
+| `FRONTEND_URL` | ❌ | URL del frontend para CORS |
 
-### Prerequisites
-- Node.js 18+
-- MySQL database
+### Frontend (Vercel)
 
-### Backend Setup
-
-```bash
-cd backend-marketplace
-npm install
-cp .env.example .env
-# Edit .env with your database credentials
-npm run seed    # Seed database with test data
-npm run dev     # Start development server
-```
-
-### Frontend Setup
-
-```bash
-cd frontend-marketplace
-npm install
-cp .env.example .env.local
-# Edit .env.local if needed
-npm run dev     # Start development server
-```
-
-## Test Credentials
-
-| Role     | Email                     | Password      |
-|----------|---------------------------|---------------|
-| ADMIN    | admin@marketplace.com     | Admin123!     |
-| CUSTOMER | customer@marketplace.com  | Customer123!  |
+| Variable | Requerida | Descripción |
+|----------|-----------|-------------|
+| `NEXT_PUBLIC_API_URL` | ✅ | URL del backend (https://.../api) |
 
 ## API Endpoints
 
 ### Auth
-- `POST /api/auth/register` - Register new user
-- `POST /api/auth/login` - Login
-- `GET /api/auth/profile` - Get user profile (auth required)
+- `POST /api/auth/register` — Registrar usuario
+- `POST /api/auth/login` — Iniciar sesión
+- `GET /api/auth/profile` — Perfil (requiere token)
 
 ### Products
-- `GET /api/products` - List products (optional: `?categoryId=1`)
-- `GET /api/products/:id` - Get product by ID
-- `POST /api/products` - Create product (ADMIN only)
-- `PUT /api/products/:id` - Update product (ADMIN only)
-- `DELETE /api/products/:id` - Delete product (ADMIN only)
+- `GET /api/products` — Listar productos
+- `GET /api/products/:id` — Producto por ID
+- `POST /api/products` — Crear (ADMIN)
+- `PUT /api/products/:id` — Actualizar (ADMIN)
+- `DELETE /api/products/:id` — Eliminar (ADMIN)
 
 ### Categories
-- `GET /api/categories` - List categories
-- `GET /api/categories/:id` - Get category by ID
-- `POST /api/categories` - Create category (ADMIN only)
-- `PUT /api/categories/:id` - Update category (ADMIN only)
-- `DELETE /api/categories/:id` - Delete category (ADMIN only)
+- `GET /api/categories` — Listar categorías
+- `GET /api/categories/:id` — Categoría por ID
+- `POST /api/categories` — Crear (ADMIN)
+- `PUT /api/categories/:id` — Actualizar (ADMIN)
+- `DELETE /api/categories/:id` — Eliminar (ADMIN)
 
-## Deployment
+## Instalación Local
 
-### Backend (Render)
-1. Push to GitHub
-2. Create a new Web Service on Render
-3. Set build command: `npm install`
-4. Set start command: `npm start`
-5. Add environment variables from `.env.example`
+### Prerrequisitos
+- Node.js 18+
+- MySQL (local o Railway)
 
-### Frontend (Vercel)
-1. Push to GitHub
-2. Import project in Vercel
-3. Set environment variable: `NEXT_PUBLIC_API_URL` = your Render URL
+### Backend
+```bash
+cd backend-marketplace
+npm install
+cp .env.example .env
+# Editar .env con tus credenciales
+npm run seed
+npm run dev
+```
 
-### CORS Configuration
-Update `FRONTEND_URL` in backend `.env` with your Vercel deployment URL.
-# project-nextjs-nodejs-marketplace
+### Frontend
+```bash
+cd frontend-marketplace
+npm install
+cp .env.example .env.local
+npm run dev
+```
+
+## Despliegue
+
+### Backend en Render
+1. Subir el repo a GitHub
+2. Crear Web Service en Render
+3. Root Directory: `backend-marketplace`
+4. Build: `npm install`
+5. Start: `npm start`
+6. Variables: `DATABASE_URL` (desde Railway), `JWT_SECRET`
+
+### Frontend en Vercel
+1. Importar repo desde Vercel
+2. Root Directory: `frontend-marketplace`
+3. Variables: `NEXT_PUBLIC_API_URL` = URL del backend
+
+### Base de Datos en Railway
+1. Crear proyecto en Railway
+2. Agregar MySQL
+3. Copiar `MYSQL_PUBLIC_URL` → usarlo como `DATABASE_URL`
+4. Ejecutar seed: `DATABASE_URL="<url>" npm run seed`
